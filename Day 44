@@ -1,0 +1,58 @@
+import random
+import time
+import os
+
+bingo = []
+
+def randNum():
+  number = random.randint(1,91)
+  return number
+
+def pp():
+  for row in bingo:
+    for item in row:
+      print(item, end="\t|\t")
+    print()
+
+
+def createCard():
+  global bingo
+  numbers = []
+  for n in range(8):
+    guess = randNum()
+    while guess in numbers:
+      guess = randNum()
+    numbers.append(randNum())
+       
+  
+  numbers.sort()
+  
+  
+  bingo = [ [numbers[0], numbers[1], numbers[2]],
+            [numbers[3], "BINGO", numbers[4] ], 
+            [numbers[5], numbers[6], numbers[7]]
+          ]
+  
+  
+
+createCard()
+while True:
+  pp()
+  guess = int(input("Guess the next number: "))
+  for row in range(3):
+    for item in range(3):
+      if bingo[row][item] == guess:
+        bingo[row][item] = "X"
+
+  exes = 0
+  for row in bingo:
+    for item in row:
+      if item =="X":
+        exes += 1
+
+  if exes == 8:
+    print("YOU WIN!")
+    break
+
+  time.sleep(1)
+  os.system("clear")
